@@ -1,6 +1,6 @@
 #!/bin/python3.12
 # -*- coding: utf-8 -*-
-#Version 1.0
+#Version 1.01
 #Original credit to Sergey Kurikalov
 
 #REQUIRES PYPERCLIP, ROFI, AND XCLIP/XSEL
@@ -57,7 +57,7 @@ class ClipboardManager():
         with open(HISTORY_FILE, "r") as file:
             clips = splitQuotes(file.read())
             for index, clip in enumerate(clips):
-                clip = clip.replace('\n', ' ')
+                clip = clip.replace('\n', ' ').replace('\\\'','\'')
                 print('{}: {}'.format(index, clip))
 
     def copy(self, select):
@@ -67,7 +67,7 @@ class ClipboardManager():
             #clips = self.read()
             index = int(select[0:select.index(':')])
             with open(CLIP_FILE, "w+") as file:
-                file.write(clips[index])
+                file.write(clips[index].replace('\\\'','\''))
 
     def paste(self):
         with open(CLIP_FILE, "r") as file:
